@@ -368,10 +368,10 @@ case $mode in
         echo "[INFO] Syncing orbit code..."
 
         rsync -rh --copy-links \
+            --exclude='*.git*' \
             --exclude='_orbit.kinodynamic_planner/_orbit/**' \
             --include='_orbit.kinodynamic_planner/***' \
             --include='_rsl_rl/***' \
-            --exclude='*.git*' \
             --filter=':- .dockerignore' \
             "$SCRIPT_DIR/../" $CLUSTER_LOGIN:$CLUSTER_ORBIT_DIR
 
