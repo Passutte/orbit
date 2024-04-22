@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # in the case you need to load specific modules on the cluster, add them here
-# e.g., `module load eth_proxy`
+module load eth_proxy
 
 # create job script with compute demands
 ### MODIFY HERE FOR YOUR JOB ###
@@ -9,9 +9,9 @@ cat <<EOT > job.sh
 #!/bin/bash
 
 #SBATCH -n 1
-#SBATCH --cpus-per-task=8
-#SBATCH --gpus=rtx_3090:1
-#SBATCH --time=23:00:00
+#SBATCH --cpus-per-task=16
+#SBATCH --gpus=rtx_4090:1
+#SBATCH --time=24:00:00
 #SBATCH --mem-per-cpu=4048
 #SBATCH --mail-type=END
 #SBATCH --mail-user=name@mail

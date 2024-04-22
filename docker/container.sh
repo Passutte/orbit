@@ -197,7 +197,7 @@ x11_check() {
     if [ "$__ORBIT_X11_FORWARDING_ENABLED" = "null" ]; then
         echo "[INFO] X11 forwarding from the Orbit container is off by default."
         echo "[INFO] It will fail if there is no display, or this script is being run via ssh without proper configuration."
-        read -p "Would you like to enable it? (y/N) " x11_answer
+=        read -p "Would you like to enable it? (y/N) " x11_answer
         if [ "$x11_answer" != "${x11_answer#[Yy]}" ]; then
             __ORBIT_X11_FORWARDING_ENABLED=1
             set_statefile_variable __ORBIT_X11_FORWARDING_ENABLED 1
@@ -362,9 +362,20 @@ case $mode in
         check_singularity_image_exists orbit-$container_profile
         # make sure target directory exists
         ssh $CLUSTER_LOGIN "mkdir -p $CLUSTER_ORBIT_DIR"
+        
         # Sync orbit code
+        echo "Script directory: $SCRIPT_DIR"
         echo "[INFO] Syncing orbit code..."
-        rsync -rh  --exclude="*.git*" --filter=':- .dockerignore'  /$SCRIPT_DIR/.. $CLUSTER_LOGIN:$CLUSTER_ORBIT_DIR
+
+        rsync -rh --copy-links \
+            --exclude='_orbit.kinodynamic_planner/_orbit/**' \
+            --include='_orbit.kinodynamic_planner/***' \
+            --include='_rsl_rl/***' \
+            --exclude='*.git*' \
+            --filter=':- .dockerignore' \
+            "$SCRIPT_DIR/../" $CLUSTER_LOGIN:$CLUSTER_ORBIT_DIR
+
+            
         # execute job script
         echo "[INFO] Executing job script..."
         # check whether the second argument is a profile or a job argument

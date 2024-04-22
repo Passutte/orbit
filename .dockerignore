@@ -19,5 +19,10 @@ recordings/
 # ignore __pycache__
 **/__pycache__/
 **/*.egg-info/
-# ignore isaac sim symlink
-_isaac_sim?
+# ignore sim symlinks
+**/_isaac_sim/**
+**/_rsl_rl/**
+**/_orbit.kinodynamic_planer/**
+**/_orbit/** 
+# ignore wandb logs
+**/wandb/

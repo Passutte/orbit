@@ -54,6 +54,12 @@ x-default-orbit-volumes: &default-orbit-volumes
   - type: volume
     source: orbit-data
     target: /workspace/orbit/data_storage
+  - type: bind
+    source: /home/passutte/Developer/kinodynamic_planner/rsl_rl
+    target: /workspace/rsl_rl
+  - type: bind
+    source: /home/passutte/Developer/kinodynamic_planner/orbit.kinodynamic_planner
+    target: /workspace/orbit.kinodynamic_planner
 
 x-default-orbit-environment: &default-orbit-environment
   - ISAACSIM_PATH=${DOCKER_ORBIT_PATH}/_isaac_sim
@@ -80,6 +86,8 @@ services:
         - ISAACSIM_VERSION=${ISAACSIM_VERSION}
         - ISAACSIM_ROOT_PATH=${DOCKER_ISAACSIM_ROOT_PATH}
         - ORBIT_PATH=${DOCKER_ORBIT_PATH}
+        - RSL_RL_PATH=${DOCKER_RSL_RL_PATH}
+        - KINODYNAMIC_PLANNER_PATH=${DOCKER_KINODYNAMIC_PLANNER_PATH}
         - DOCKER_USER_HOME=${DOCKER_USER_HOME}
     image: orbit-base
     container_name: orbit-base
