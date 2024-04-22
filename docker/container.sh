@@ -368,7 +368,7 @@ case $mode in
         rsync -rh  --exclude="*.git*" --filter=':- .dockerignore'  /$SCRIPT_DIR/.. $CLUSTER_LOGIN:$CLUSTER_ORBIT_DIR
         # sync orbit.kinodynamic_planner and rsl_rl
         echo "[INFO] Syncing orbit.kinodynamic_planner..."
-        rsync -rh  --exclude="*.git*" --exclude="logs" /$LOCAL_KINODYNAMIC_PLANNER_DIR $CLUSTER_LOGIN:$CLUSTER_ORBIT_DIR
+        rsync -rh  --exclude="*.git*" --exclude="logs/*" /$LOCAL_KINODYNAMIC_PLANNER_DIR $CLUSTER_LOGIN:$CLUSTER_ORBIT_DIR
         echo "[INFO] Syncing rsl_rl..."
         rsync -rh  --exclude="*.git*" /$LOCAL_RSL_RL_DIR $CLUSTER_LOGIN:$CLUSTER_ORBIT_DIR
 

@@ -65,7 +65,7 @@ singularity exec \
     -B $CLUSTER_ORBIT_DIR/logs:/workspace/orbit/logs:rw \
     -B $CLUSTER_ORBIT_DIR/orbit.kinodynamic_planner/logs:/workspace/orbit/orbit.kinodynamic_planner/logs:rw \
     --nv --writable --containall $TMPDIR/$1.sif \
-    bash -c "export ORBIT_PATH=/workspace/orbit && cd /workspace/orbit/rsl_rl && /isaac-sim/python.sh -m pip install . && cd /workspace/orbit/orbit.kinodynamic_planner && /isaac-sim/python.sh -m pip install . &&  /isaac-sim/python.sh ${CLUSTER_PYTHON_EXECUTABLE} ${@:2}"
+    bash -c "export ORBIT_PATH=/workspace/orbit && cd /workspace/orbit && /isaac-sim/python.sh -m pip install -e rsl_rl && /isaac-sim/python.sh ${CLUSTER_PYTHON_EXECUTABLE} ${@:2}"
 
 # copy resulting cache files back to host
 cp -r $TMPDIR/docker-isaac-sim $CLUSTER_ISAAC_SIM_CACHE_DIR/..
