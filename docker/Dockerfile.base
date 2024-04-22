@@ -22,9 +22,6 @@ LABEL description="Dockerfile for building and running the Orbit framework insid
 ARG ISAACSIM_ROOT_PATH
 # Path to orbit directory
 ARG ORBIT_PATH
-# Path to extensions
-ARG RSL_RL_PATH
-ARG KINODYNAMIC_PLANNER_PATH
 # Home dir of docker user, typically '/root'
 ARG DOCKER_USER_HOME
 
@@ -32,7 +29,7 @@ ARG DOCKER_USER_HOME
 ENV LANG=C.UTF-8
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Define the default user
+# Weight and Biases
 ENV WANDB_USERNAME="passutte"
 ENV WANDB_API_KEY="62585e6ddde4ffb4a315f5601021d889e035169b"
 ENV WANDB_PROJECT="Kinodynamic_Planner"
@@ -63,10 +60,6 @@ RUN mkdir -p ${ISAACSIM_ROOT_PATH}/kit/cache && \
     mkdir -p ${DOCKER_USER_HOME}/.nvidia-omniverse/logs && \
     mkdir -p ${DOCKER_USER_HOME}/.local/share/ov/data && \
     mkdir -p ${DOCKER_USER_HOME}/Documents
-
-# Symbolic links
-RUN ln -sf ${RSL_RL_PATH} ${ORBIT_PATH}/_rsl_rl
-RUN ln -sf ${KINODYNAMIC_PLANNER_PATH} ${ORBIT_PATH}/_orbit.kinodynamic_planner
 
 # for singularity usage, create NVIDIA binary placeholders
 RUN touch /bin/nvidia-smi && \

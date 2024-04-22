@@ -364,18 +364,14 @@ case $mode in
         ssh $CLUSTER_LOGIN "mkdir -p $CLUSTER_ORBIT_DIR"
         
         # Sync orbit code
-        echo "Script directory: $SCRIPT_DIR"
         echo "[INFO] Syncing orbit code..."
+        rsync -rh  --exclude="*.git*" --filter=':- .dockerignore'  /$SCRIPT_DIR/.. $CLUSTER_LOGIN:$CLUSTER_ORBIT_DIR
+        # sync orbit.kinodynamic_planner and rsl_rl
+        echo "[INFO] Syncing orbit.kinodynamic_planner..."
+        rsync -rh  --exclude="*.git*" --exclude="logs" /$LOCAL_KINODYNAMIC_PLANNER_DIR $CLUSTER_LOGIN:$CLUSTER_ORBIT_DIR
+        echo "[INFO] Syncing rsl_rl..."
+        rsync -rh  --exclude="*.git*" /$LOCAL_RSL_RL_DIR $CLUSTER_LOGIN:$CLUSTER_ORBIT_DIR
 
-        rsync -rh --copy-links \
-            --exclude='*.git*' \
-            --exclude='_orbit.kinodynamic_planner/_orbit/**' \
-            --include='_orbit.kinodynamic_planner/***' \
-            --include='_rsl_rl/***' \
-            --filter=':- .dockerignore' \
-            "$SCRIPT_DIR/../" $CLUSTER_LOGIN:$CLUSTER_ORBIT_DIR
-
-            
         # execute job script
         echo "[INFO] Executing job script..."
         # check whether the second argument is a profile or a job argument
